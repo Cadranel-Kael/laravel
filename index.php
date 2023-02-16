@@ -1,28 +1,12 @@
 <?php
-$author = $_GET["author"] ?? "";
 
-$books = [
-    [
-        "title" => "L’étranger",
-        "author" => "Albert Camus",
-        "release_date" => 1942,
-    ],
-    [
-        "title" => "La peste",
-        "author" => "Albert Camus",
-        "release_date" => 1947,
-    ],
-    [
-        "title" => "La conjuration des imbéciles",
-        "author" => "John Kennedy Toole",
-        "release_date" => 1980,
-    ],
-];
+define('VIEWS_PATH', $_SERVER['DOCUMENT_ROOT'] . '/views');
+define('CONTROLLERS_PATH', $_SERVER['DOCUMENT_ROOT'] . '/controllers');
+define('STYLES_CONFIG', require "./config/styles.php");
 
-$decision = function (array $item) use ($author): bool {
-    return $item["author"] === $author;
-};
+require './utils/functions.php';
 
-$filteredBooks = array_filter($books, $decision);
-$authors = array_column($books, "author", "author");
-require "index.view.php";
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+require './router.php';
+
+routeToController($path);
