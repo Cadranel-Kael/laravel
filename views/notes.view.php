@@ -16,7 +16,16 @@
                 <!-- Replace with your content -->
                 <div class="px-4 py-6 sm:px-0">
                     <div class="h-96 rounded-lg border-4 border-dashed border-gray-200">
-                        <h1>À propos</h1>
+                        <h1>Ma liste de notes</h1>
+                        <?php if (count($notes)) : ?>
+                            <?php foreach ($notes as $note) : ?>
+                                <article>
+                                    <p><a class="underline text-blue-500" href="/note?id=<?= $note['id']; ?>"><?= $note["description"] ?></a></p>
+                                </article>
+                            <?php endforeach ?>
+                        <?php else : ?>
+                            <p>Il n’y a pas de note à afficher</p>
+                        <?php endif ?>
                     </div>
                 </div>
                 <!-- /End replace -->

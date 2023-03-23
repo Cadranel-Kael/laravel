@@ -16,7 +16,11 @@
                 <!-- Replace with your content -->
                 <div class="px-4 py-6 sm:px-0">
                     <div class="h-96 rounded-lg border-4 border-dashed border-gray-200">
-                        <h1>À propos</h1>
+                        <h1>Ma note</h1>
+                        <p><?= $note["description"] ?></p>
+                    </div>
+                    <div>
+                        <a href="/notes">Retourner à l'index des notes</a>
                     </div>
                 </div>
                 <!-- /End replace -->
