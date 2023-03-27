@@ -27,6 +27,7 @@
                             <p>Il n’y a pas de note à afficher</p>
                         <?php endif ?>
                     </div>
+                    <div><a class="text-blue-500 underline" href="/note-create">Create a new note</a></div>
                 </div>
                 <!-- /End replace -->
             </div>
