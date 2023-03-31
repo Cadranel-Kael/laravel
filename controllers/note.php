@@ -1,5 +1,7 @@
 <?php
 
+use Core\Database;
+
 $heading = 'Note';
 $currentUserId = 1;
 $id = (int)$_GET['id'];

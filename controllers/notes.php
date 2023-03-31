@@ -1,5 +1,7 @@
 <?php
 
+use Core\Database;
+
 $heading = 'Mes Notes';
 $currentUserId = 1;
 $database = new Database(ENV_FILE);
