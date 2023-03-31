@@ -18,7 +18,7 @@ function base_path(string $path): string
     return BASE_PATH . $path;
 }
 
-function view(string $path, array $params): void
+function view(string $path, array $params = []): void
 {
     extract($params);
     require base_path('views/' . $path);

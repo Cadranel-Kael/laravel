@@ -20,6 +20,13 @@
                         <p><?= htmlspecialchars($note["description"]) ?></p>
                     </div>
                     <div>
+                        <form action="/note" method="post">
+                            <input type="hidden" name="_method" value="delete">
+                            <input type="hidden" name="id" value="<?= $note['id'] ?>">
+                            <button type="submit">Delete this note</button>
+                        </form>
+                    </div>
+                    <div>
                         <a href="/notes">Retourner à l'index des notes</a>
                     </div>
                 </div>

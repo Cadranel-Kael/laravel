@@ -49,7 +49,7 @@ class Database
     {
         $row = $this->find();
         if (!$row) {
-            abort();
+            Response::abort();
         }
         return $row;
     }
