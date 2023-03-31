@@ -1,11 +1,11 @@
 <?php
 
 return [
-    '/' => 'index.php',
-    '/about' => 'about.php',
-    '/contact' => 'contact.php',
-    '/notes' => 'notes.php',
-    '/note' => 'note.php',
-    '/note-create' => 'note-create.php',
-    '/note-store' => 'note-store.php',
+    '/' => 'pages/dashboard.php',
+    '/about' => 'pages/about.php',
+    '/contact' => 'pages/contact.php',
+    '/notes' => 'notes/index.php',
+    '/note' => 'notes/show.php',
+    '/notes/create' => 'notes/create.php',
+    '/notes/store' => 'notes/store.php',
 ];

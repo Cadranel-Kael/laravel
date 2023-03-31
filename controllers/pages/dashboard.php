@@ -1,4 +1,5 @@
 <?php
+
 $heading = 'Dashboard';
 $author = $_GET["author"] ?? "";
 
@@ -26,4 +27,4 @@ $decision = function (array $item) use ($author): bool {
 
 $filteredBooks = array_filter($books, $decision);
 $authors = array_column($books, "author", "author");
-require VIEWS_PATH . "/index.view.php";
+view("pages/dashboard.view.php", compact('heading', 'filteredBooks', 'authors'));

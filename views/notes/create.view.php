@@ -9,11 +9,11 @@
 
 <body class="h-full">
     <div class="min-h-full">
-        <?php require VIEWS_PATH . '/partials/nav.view.php' ?>
-        <?php require VIEWS_PATH . '/partials/header.view.php' ?>
+        <?php require base_path('views/partials/nav.view.php') ?>
+        <?php require base_path('views/partials/header.view.php') ?>
         <main>
             <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                <form method="post" action="/note-store">
+                <form method="post" action="/notes/store">
                     <div class="space-y-12">
                         <div class="border-b border-gray-900/10 pb-12">
                             <h2 class="text-base font-semibold leading-7 text-gray-900">Create a new note</h2>

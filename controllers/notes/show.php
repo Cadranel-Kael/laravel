@@ -10,4 +10,4 @@ $note = $database->query('SELECT * FROM Notes where id = :id', ['id' => $id])->f
 if ($currentUserId !== $note['user_id']) {
     abort(403);
 }
-require VIEWS_PATH . '/note.view.php';
+view('notes/show.view.php', compact('heading', 'currentUserId', 'note'));
