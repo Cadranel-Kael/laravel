@@ -20,7 +20,7 @@
                         <?php if (count($notes)) : ?>
                             <?php foreach ($notes as $note) : ?>
                                 <article>
-                                    <p><a class="underline text-blue-500" href="/note?id=<?= $note['id']; ?>"><?= $note["description"] ?></a></p>
+                                    <p><a class="underline text-blue-500" href="/note?id=<?= $note['id']; ?>"><?= htmlspecialchars($note["description"]) ?></a></p>
                                 </article>
                             <?php endforeach ?>
                         <?php else : ?>
