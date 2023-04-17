@@ -27,6 +27,11 @@ class Router
         $this->add($uri, 'DELETE', $controller);
     }
 
+    public function patch(string $uri, string $controller)
+    {
+        $this->add($uri, 'PATCH', $controller);
+    }
+
     public function routeToController(string $uri, string $method)
     {
         $routes = array_values(array_filter($this->routes, fn ($r) => $uri === $r['uri'] && strtoupper($method) === $r['method']));

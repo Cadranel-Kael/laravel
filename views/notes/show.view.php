@@ -25,6 +25,7 @@
                             <input type="hidden" name="id" value="<?= $note['id'] ?>">
                             <button type="submit">Delete this note</button>
                         </form>
+                        <a href="/note/edit?id=<?= $note['id'] ?>">Edit this note</a>
                     </div>
                     <div>
                         <a href="/notes">Retourner à l'index des notes</a>
