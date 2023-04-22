@@ -18,7 +18,7 @@ class Validator
     {
         $has_number = preg_match('/\d/', $password);
         $has_uppercase = preg_match('/[A-Z]/', $password);
-        $has_symbol = preg_match('/[^a-zA-Z0-9]/', $password);
+        $has_symbol = preg_match('/[^a-zA-Z0-9\s]/', $password);
 
         return $has_number && $has_uppercase && $has_symbol && strlen(trim($password)) >= $length;
     }
@@ -26,6 +26,6 @@ class Validator
     public static function exists($value, string $table, string $field = 'id'): array|bool
     {
         $db = new Database(ENV_FILE);
-        return $db->query("SELECT id FROM ${table} WHERE ${field} = :value", ['value' => $value])->find();
+        return $db->query("SELECT id FROM {$table} WHERE {$field} = :value", ['value' => $value])->find();
     }
 }

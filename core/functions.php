@@ -24,12 +24,10 @@ function view(string $path, array $params = []): void
     require base_path('views/' . $path);
 }
 
-function generate_password(int $length = 16)
+function generate_password(int $length = 16): string
 {
-    $password = '';
-
     // Génère un chiffre aléatoire
-    $password .= chr(random_int(48, 57));
+    $password = chr(random_int(48, 57));
 
     // Génère une lettre capitale aléatoire
     $password .= chr(random_int(65, 90));
@@ -37,13 +35,13 @@ function generate_password(int $length = 16)
     // Génère un symbole aléatoire
     $password .= chr(random_int(33, 47));
 
+    $remainingLength = $length - strlen($password);
+
     // Génère les caractères restants de façon aléatoire
-    for ($i = 0; $i < $length - 3; $i++) {
+    for ($i = 0; $i < $remainingLength; $i++) {
         $password .= chr(random_int(33, 126));
     }
 
-    // Mélange les caractères
-    $password = str_shuffle($password);
-
-    return $password;
+    // Retourne les caractères mélangés
+    return str_shuffle($password);
 }
