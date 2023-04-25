@@ -15,7 +15,7 @@ $router->patch('/note', 'notes/update.php');
 
 /* User Account creation */
 $router->get('/register', 'userAccounts/create.php');
-$router->post('/userAccounts', 'userAccounts/store.php');
+$router->post('/register', 'userAccounts/store.php');
 
 /* User Session creation */
 $router->get('/login', 'userSessions/create.php');

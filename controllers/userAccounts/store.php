@@ -44,5 +44,5 @@ if (empty($errors)) {
 } else {
     $heading = 'Please check your credentials in order to create your user account';
     $suggested_password = generate_password();
-    view('userAccounts/create.view.php', compact('heading', 'suggested_password', 'errors', 'email', 'password'));
+    view('userAccounts/create.view.php', compact('heading', 'suggested_password', 'errors', 'name', 'email', 'password'));
 }
