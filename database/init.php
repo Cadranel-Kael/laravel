@@ -1,7 +1,7 @@
 <?php
 
-define('BASE_PATH', __DIR__ . '/../');
-require BASE_PATH . 'core/functions.php';
+define('BASE_PATH', __DIR__.'/../');
+require BASE_PATH.'core/functions.php';
 require base_path('vendor/autoload.php');
 
 $file = base_path('env.local.ini');
@@ -12,11 +12,11 @@ try {
     createTables($database);
     seedTables($database);
 } catch (Exception $e) {
-    echo($e->getMessage());
-};
-function recreateDatabase(\Core\Database $database): void
+    echo $e->getMessage();
+}
+function recreateDatabase(Core\Database $database): void
 {
-    $sql = <<<sql
+    $sql = <<<'sql'
     DROP SCHEMA IF EXISTS `notes`;
     CREATE SCHEMA `notes`;
 sql;
@@ -26,11 +26,11 @@ sql;
 
 function deleteTables(Core\Database $database): void
 {
-    $sql = <<<sql
+    $sql = <<<'sql'
     DROP TABLE IF EXISTS `notes`;
 sql;
     $database->query($sql);
-    $sql = <<<sql
+    $sql = <<<'sql'
     DROP TABLE IF EXISTS `users`;
 sql;
     $database->query($sql);
@@ -38,7 +38,7 @@ sql;
 
 function createTables(Core\Database $database): void
 {
-    $sql = <<<sql
+    $sql = <<<'sql'
     CREATE TABLE `users` (
       `id` int unsigned NOT NULL AUTO_INCREMENT,
       `name` varchar(255) NOT NULL,
@@ -49,7 +49,7 @@ function createTables(Core\Database $database): void
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 sql;
     $database->query($sql);
-    $sql = <<<sql
+    $sql = <<<'sql'
     CREATE TABLE `notes` (
       `id` int unsigned NOT NULL AUTO_INCREMENT,
       `user_id` int unsigned NOT NULL,

@@ -24,19 +24,19 @@
                                 <div class="col-span-full">
                                     <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Your name (at least two characters, we'll check if it already exists when you submit the form)</label>
                                     <div class="mt-2">
-                                        <input type="text" id="name" name="name" value="<?= $name ?? '' ?>" placeholder="Jon Doe" class="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 px-1.5 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6">
+                                        <input type="text" id="name" name="name" value="<?= $_SESSION['old']['name'] ?? '' ?>" placeholder="Jon Doe" class="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 px-1.5 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6">
                                     </div>
-                                    <?php if (isset($errors['name'])) : ?>
-                                        <p><?= $errors['name'] ?></p>
+                                    <?php if (isset($_SESSION['errors']['name'])) : ?>
+                                        <p><?= $_SESSION['errors']['name'] ?></p>
                                     <?php endif ?>
                                 </div>
                                 <div class="col-span-full">
                                     <label for="email" class="block text-sm font-medium leading-6 text-gray-900">A valid email address (required)</label>
                                     <div class="mt-2">
-                                        <input type="email" id="email" name="email" value="<?= $email ?? '' ?>" placeholder="jon@doe.com" class="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 px-1.5 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6">
+                                        <input type="email" id="email" name="email" value="<?= $_SESSION['old']['email'] ?? '' ?>" placeholder="jon@doe.com" class="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 px-1.5 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6">
                                     </div>
-                                    <?php if (isset($errors['email'])) : ?>
-                                        <p><?= $errors['email'] ?></p>
+                                    <?php if (isset($_SESSION['errors']['email'])) : ?>
+                                        <p><?= $_SESSION['errors']['email'] ?></p>
                                     <?php endif ?>
                                 </div>
                                 <div class="col-span-full">
@@ -44,8 +44,8 @@
                                     <div class="mt-2">
                                         <input type="password" id="password" name="password" rows="3" class="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 px-1.5 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6">
                                     </div>
-                                    <?php if (isset($errors['password'])) : ?>
-                                        <p><?= $errors['password'] ?></p>
+                                    <?php if (isset($_SESSION['errors']['password'])) : ?>
+                                        <p><?= $_SESSION['errors']['password'] ?></p>
                                     <?php endif ?>
                                 </div>
                                 <div class="mt-6 flex items-center gap-x-6">

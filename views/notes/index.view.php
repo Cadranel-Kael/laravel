@@ -16,15 +16,14 @@
                 <!-- Replace with your content -->
                 <div class="px-4 py-6 sm:px-0">
                     <div class="h-96 rounded-lg border-4 border-dashed border-gray-200">
-                        <h1>Ma liste de notes</h1>
                         <?php if (count($notes)) : ?>
                             <?php foreach ($notes as $note) : ?>
                                 <article>
-                                    <p><a class="underline text-blue-500" href="/note?id=<?= $note['id']; ?>"><?= htmlspecialchars($note["description"]) ?></a></p>
+                                    <p><a class="underline text-blue-500" href="/note?id=<?= $note->id; ?>"><?= htmlspecialchars($note->description) ?></a></p>
                                 </article>
                             <?php endforeach ?>
                         <?php else : ?>
-                            <p>Il n’y a pas de note à afficher</p>
+                            <p>It seems that you haven't posted any note yet. Would you like to <a href="/notes/create" class="text-blue-500 underline">create one</a> ?</p>
                         <?php endif ?>
                     </div>
                     <div><a class="text-blue-500 underline" href="/notes/create">Create a new note</a></div>
