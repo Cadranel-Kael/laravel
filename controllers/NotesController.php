@@ -12,12 +12,18 @@ class NotesController
 
     public function __construct()
     {
-        $this->user = $_SESSION['user'] ?? null;
+        // Since the middleware has checked the presence of a user in the session,
+        // we can safely use its id without checking its presence.
+        // It doesnt mean that the user is authorized to interact with whatever note
+        // but we will always include the user id in our sql requests.
+        // It is not a very controlled authorization strategy, but it's a start.
+        $this->user = $_SESSION['user'];
     }
 
     private function checkDescriptionForNote(): void
     {
         //Useful for both update and store
+        //extracted in a function to respect DRY principle
 
         if (! isset($_POST['description'])) {
             Response::abort(Response::BAD_REQUEST);
@@ -36,7 +42,7 @@ class NotesController
         $database = new Database(ENV_FILE);
 
         $notes = $database->query(
-            'SELECT * FROM Notes where user_id = :user_id',
+            'SELECT * FROM notes where user_id = :user_id',
             ['user_id' => $this->user->id]
         )->all();
 
@@ -53,13 +59,13 @@ class NotesController
 
         $database = new Database(ENV_FILE);
         $note = $database->query(
-            'SELECT * FROM Notes where id = :id',
-            ['id' => $id]
+            'SELECT * FROM notes 
+            WHERE id = :id AND user_id = :user_id',
+            [
+                'id' => $id,
+                'user_id' => $this->user->id,
+            ]
         )->findOrFail();
-
-        if ($_SESSION['user']->id !== $note->user_id) {
-            Response::abort(Response::FORBIDDEN);
-        }
 
         view(
             'notes/show.view.php',
@@ -83,9 +89,9 @@ class NotesController
                 'INSERT INTO notes(description, user_id) 
                 VALUES(:description, :user_id)',
                 [
-                'description' => $description,
-                'user_id' => $_SESSION['user']->id
-            ]
+                    'description' => $description,
+                    'user_id' => $this->user->id,
+                ]
             );
             $location =
                 'http://' . $_SERVER['HTTP_HOST'].'/notes';
@@ -110,8 +116,9 @@ class NotesController
             'SELECT * FROM notes 
             WHERE id = :id AND user_id = :user_id',
             [
-            'id' => $id,
-            'user_id' => $_SESSION['user']->id]
+                'id' => $id,
+                'user_id' => $this->user->id,
+            ]
         )->findOrFail();
 
         view('notes/edit.view.php', compact('heading', 'note'));
@@ -133,7 +140,7 @@ class NotesController
                 [
                     'description'=>$description,
                     'id' => $id,
-                    'user_id'=> $_SESSION['user']->id
+                    'user_id'=> $this->user->id,
                 ]
             );
             // TODO the update might actually fail but, here again, one thing at a time
@@ -158,7 +165,7 @@ class NotesController
             'DELETE FROM notes WHERE id = :id AND user_id = :user_id',
             [
                 'id' => $id,
-                'user_id' => $_SESSION['user']->id
+                'user_id' => $this->user->id,
             ]
         );
 
