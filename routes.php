@@ -15,7 +15,7 @@ $router->get('/contact', 'pages/contact.php');*/
 $router->get('/notes', [NotesController::class, 'index'])->only('authenticated');
 $router->get('/note', [NotesController::class, 'show'])->only('authenticated');
 $router->get('/notes/create', [NotesController::class, 'create'])->only('authenticated');
-$router->post('/notes', [NotesController::class, 'store'])->only('authenticated');
+$router->post('/notes', [NotesController::class, 'store'])->only('authenticated')->csrf();
 $router->delete('/note', [NotesController::class, 'destroy'])->only('authenticated');
 $router->get('/note/edit', [NotesController::class, 'edit'])->only('authenticated');
 $router->patch('/note', [NotesController::class, 'update'])->only('authenticated');

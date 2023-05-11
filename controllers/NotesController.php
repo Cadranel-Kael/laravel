@@ -5,9 +5,11 @@ namespace Controllers;
 use Core\Database;
 use Core\Response;
 use Core\Validator;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class NotesController
 {
+    use HandleFileUpload;
     private \stdClass $user;
 
     public function __construct()
@@ -20,11 +22,8 @@ class NotesController
         $this->user = $_SESSION['user'];
     }
 
-    private function checkDescriptionForNote(): void
+    private function checkDescriptionForNote(): string
     {
-        //Useful for both update and store
-        //extracted in a function to respect DRY principle
-
         if (! isset($_POST['description'])) {
             Response::abort(Response::BAD_REQUEST);
         }
@@ -32,7 +31,11 @@ class NotesController
         if (! Validator::between($_POST['description'], 1, 255)) {
             $_SESSION['errors']['description'] =
                 'The description must be more than 1 character and less than 255 characters long';
+            $_SESSION['old']['description'] = $_POST['description'];
+            return '';
         }
+
+        return trim($_POST['description']);
     }
 
     public function index(): void
@@ -81,16 +84,21 @@ class NotesController
 
     public function store(): void
     {
-        $this->checkDescriptionForNote();
+        $note_description = $this->checkDescriptionForNote();
+        $image_url = $this->handleImageUpload();
         if (empty($_SESSION['errors'])) {
-            $description = $_POST['description'];
+            //Persist
+            if($image_url) {
+                $this->save_images($image_url);
+            }
             $database = new Database(ENV_FILE);
             $database->query(
-                'INSERT INTO notes(description, user_id) 
-                VALUES(:description, :user_id)',
+                'INSERT INTO notes(description, user_id,image_url) 
+                VALUES(:description, :user_id, :image_url)',
                 [
-                    'description' => $description,
+                    'description' => $note_description,
                     'user_id' => $this->user->id,
+                    'image_url' => $image_url,
                 ]
             );
             $location =
@@ -173,4 +181,23 @@ class NotesController
         header('Location: '.$location);
         exit;
     }
+
+    public function save_images($path): bool
+    {
+        $tmp_path = $_FILES['thumbnail']['tmp_name'];
+        $image = Image::make($tmp_path);
+        $width = $image->width();
+        $height = $image->height();
+        $ratio = $width / $height;
+        foreach(NOTES_THUMBS_WIDTHS as $thumb_width) {
+            if(!file_exists(storage_path('public/img/'.$thumb_width))) {
+                mkdir(storage_path('public/img/'.$thumb_width));
+            }
+
+            $image->resize($thumb_width, $thumb_width / $ratio)
+                  ->save(storage_path('public/img/'.$thumb_width.'/').$path);
+        }
+        return true;
+    }
+
 }

@@ -54,6 +54,7 @@ sql;
       `id` int unsigned NOT NULL AUTO_INCREMENT,
       `user_id` int unsigned NOT NULL,
       `description` text NOT NULL,
+      `image_url` varchar(255),
       PRIMARY KEY (`id`),
       KEY `user_id` (`user_id`),
       CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

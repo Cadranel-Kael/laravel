@@ -9,6 +9,7 @@ class Middleware
     protected const MAP = [
         'guest' => Guest::class,
         'authenticated' => Authenticated::class,
+        'csrf' => CSRF::class,
     ];
 
     public static function resolve(string|null $name = null): void

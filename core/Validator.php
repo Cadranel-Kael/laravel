@@ -39,12 +39,26 @@ class Validator
         $value,
         string $table,
         string $field = 'id'
-    ): array|bool {
+    ): \stdClass|bool {
         $db = new Database(ENV_FILE);
 
         return $db->query(
             "SELECT id FROM {$table} WHERE {$field} = :value",
             ['value' => $value]
         )->find();
+    }
+
+    public static function image(string $path): bool
+    {
+        $valid_types = [
+            'image/jpg',
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+        ];
+        $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
+        $type =  finfo_file($finfo, $path);
+        finfo_close($finfo);
+        return in_array($type, $valid_types);
     }
 }

@@ -5,6 +5,7 @@ require BASE_PATH . 'core/functions.php';
 
 require base_path('vendor/autoload.php');
 define('STYLES_CONFIG', require base_path("config/styles.php"));
+define('NOTES_THUMBS_WIDTHS', require base_path("config/files.php"));
 define('ENV_FILE', base_path('env.local.ini'));
 
 session_start();

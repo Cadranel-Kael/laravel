@@ -18,6 +18,11 @@ function base_path(string $path): string
     return BASE_PATH . $path;
 }
 
+function storage_path(string $path): string
+{
+    return BASE_PATH . 'storage/'.$path;
+}
+
 function view(string $path, array $params = []): void
 {
     extract($params);
@@ -25,6 +30,14 @@ function view(string $path, array $params = []): void
     $_SESSION['errors'] = [];
     $_SESSION['old'] = [];
     $_SESSION['flash'] = [];
+}
+function csrf_token(): void
+{
+    $csrf_token = bin2hex(random_bytes(64));
+    $_SESSION['csrf_token'] = $csrf_token;
+    echo <<<HTML
+<input type="hidden" name="csrf_token" value="$csrf_token">
+HTML;
 }
 
 function generate_password(int $length = 16): string

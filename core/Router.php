@@ -11,7 +11,7 @@ class Router
 
     public function add(string $uri, string $method, array|string $controller): Router
     {
-        $middleware = null;
+        $middleware = [];
         $this->routes[] = compact('uri', 'method', 'controller', 'middleware');
 
         return $this;
@@ -37,9 +37,16 @@ class Router
         return $this->add($uri, 'PATCH', $controller);
     }
 
-    public function only(string $key): void
+    public function only(string $key): Router
     {
-        $this->routes[array_key_last($this->routes)]['middleware'] = $key;
+        $this->routes[array_key_last($this->routes)]['middleware'][] = $key;
+        return $this;
+    }
+
+    public function csrf(): Router
+    {
+        $this->routes[array_key_last($this->routes)]['middleware'][] = 'csrf';
+        return $this;
     }
 
     public function routeToController(string $uri, string $method): void
@@ -56,7 +63,9 @@ class Router
 
         if (! is_null($routes[0]['middleware'])) {
             try {
-                Middleware::resolve($routes[0]['middleware']);
+                foreach($routes[0]['middleware'] as $middleware) {
+                    Middleware::resolve($middleware);
+                }
             } catch (Exception $e) {
                 exit($e->getMessage());
             }
